@@ -1,5 +1,8 @@
-#Large Callbacks directory
+# Large Callbacks directory
 Callbacks/
+
+# Large Dataset
+artificial-neural-networks-and-deep-learning-2020.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
