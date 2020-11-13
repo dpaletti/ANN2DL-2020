@@ -4,6 +4,9 @@ Callbacks/
 # Large Dataset
 artificial-neural-networks-and-deep-learning-2020.zip
 
+# Saved Models
+*.h5
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

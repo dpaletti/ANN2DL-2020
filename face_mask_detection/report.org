@@ -1,0 +1,87 @@
+#+TITLE: Report
+
+* LaNet+ training
+Batch Size = 16
+Epoch = 50 (picked arbitrarily because the model is small and dropout probability is 0.5 (high))
+Optimizer = rmsprop (with default values)
+Data Augmentation = shear_range: 0.2
+                    zoom_range: 0.2
+                    horizontal_filp: True
+Early Stopping = False
+TensorBoard Smoothing: 0.614
+Test Accuracy = 0.664
+* LaNetb training
+Batch Size = 16
+Epoch = 50 (picked arbitrarily because the model is small and dropout probability is 0.5 (high))
+Optimizer = rmsprop (with default values)
+Data Augmentation = shear_range: 0.2
+                    zoom_range: 0.2
+                    horizontal_filp: True
+Early Stopping = False
+TensorBoard Smoothing: 0.614
+Test Accuracy: 0.62000
+* tlX training
+Xception frozen
+Batch Size = 16
+Epoch = 20
+Optimizer = Adam (default values)
+Data Augmentation = shear_range: 0.2
+                    zoom_range: 0.2
+                    horizontal_filp: True
+Early Stopping = False
+TensorBoard Smoothing: 0.6
+Test Accuracy: 0.688
+* ftX training
+Weights are initialized with tlX weights (same network) and Xception is completely unfrozen
+Batch Size = 16
+Epoch = 10
+Optimizer = Adam (default values)
+Data Augmentation = shear_range: 0.2
+                    zoom_range: 0.2
+                    horizontal_filp: True
+Early Stopping = False
+TensorBoard Smoothing: 0.6
+Test accuracy: 0.8377
+* ChennaiNet training
+Using tlX and ftX as a starting point the same training procedure is applied but the pooling is changed, a flattening layer and a dense layer with 0.5 Dropout are added taking inspiration from https://arxiv.org/pdf/2009.08369.pdf .
+Intermediate model:
+
+    Xception frozen
+    Batch Size = 16
+    Epoch = 20
+    Optimizer = Adam (default values)
+    Data Augmentation = shear_range: 0.2
+                        zoom_range: 0.2
+                        horizontal_filp: True
+    Early Stopping = False
+    TensorBoard Smoothing: 0.6
+    Test Accuracy: 0.6577
+Final Model:
+    Xception frozen
+    Batch Size = 16
+    Epoch = 10
+    Optimizer = Adam (default values)
+    Data Augmentation = shear_range: 0.2
+                        zoom_range: 0.2
+                        horizontal_filp: True
+    Early Stopping = False
+    TensorBoard Smoothing: 0.6
+    Test Accuracy: 0.82
+* KadapaNet training
+rescale=1./255,
+        shear_range=0.2,
+        zoom_range=[0.5, 1.0],
+        horizontal_flip=True,
+        width_shift_range=0.5,
+        height_shift_range=0.5,
+        rotation_range=90,
+        brightness_range=[0.2, 1.0]
+Intermediate Model:
+    Early stop: patience = 5
+    Batch Size = 16
+    Epoch = 20
+    Optimizer = Adam : learning rate = 1e-2
+    Data Augmentation = shear_range: 0.2
+                        zoom_range: 0.2
+                        horizontal_filp: True
+ Final Model
