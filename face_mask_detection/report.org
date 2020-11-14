@@ -1,6 +1,14 @@
 #+TITLE: Report
-
-* LaNet+ training
+* Considerations
+** Regularization factors
+- Augmentation
+- Layers
+- Batch Regularization (only for deep nets)
+- Dropout (with probability and weight regularization)
+- learning rate
+- Early Stopping
+* Nets
+** LaNet+ training
 Batch Size = 16
 Epoch = 50 (picked arbitrarily because the model is small and dropout probability is 0.5 (high))
 Optimizer = rmsprop (with default values)
@@ -10,7 +18,7 @@ Data Augmentation = shear_range: 0.2
 Early Stopping = False
 TensorBoard Smoothing: 0.614
 Test Accuracy = 0.664
-* LaNetb training
+** LaNetb training
 Batch Size = 16
 Epoch = 50 (picked arbitrarily because the model is small and dropout probability is 0.5 (high))
 Optimizer = rmsprop (with default values)
@@ -20,7 +28,7 @@ Data Augmentation = shear_range: 0.2
 Early Stopping = False
 TensorBoard Smoothing: 0.614
 Test Accuracy: 0.62000
-* tlX training
+** tlX training
 Xception frozen
 Batch Size = 16
 Epoch = 20
@@ -31,7 +39,7 @@ Data Augmentation = shear_range: 0.2
 Early Stopping = False
 TensorBoard Smoothing: 0.6
 Test Accuracy: 0.688
-* ftX training
+** ftX training
 Weights are initialized with tlX weights (same network) and Xception is completely unfrozen
 Batch Size = 16
 Epoch = 10
@@ -42,7 +50,7 @@ Data Augmentation = shear_range: 0.2
 Early Stopping = False
 TensorBoard Smoothing: 0.6
 Test accuracy: 0.8377
-* ChennaiNet training
+** ChennaiNet training
 Using tlX and ftX as a starting point the same training procedure is applied but the pooling is changed, a flattening layer and a dense layer with 0.5 Dropout are added taking inspiration from https://arxiv.org/pdf/2009.08369.pdf .
 Intermediate model:
 
@@ -67,21 +75,21 @@ Final Model:
     Early Stopping = False
     TensorBoard Smoothing: 0.6
     Test Accuracy: 0.82
-* KadapaNet training
-rescale=1./255,
-        shear_range=0.2,
-        zoom_range=[0.5, 1.0],
-        horizontal_flip=True,
-        width_shift_range=0.5,
-        height_shift_range=0.5,
-        rotation_range=90,
-        brightness_range=[0.2, 1.0]
-Intermediate Model:
-    Early stop: patience = 5
-    Batch Size = 16
-    Epoch = 20
-    Optimizer = Adam : learning rate = 1e-2
-    Data Augmentation = shear_range: 0.2
-                        zoom_range: 0.2
-                        horizontal_filp: True
- Final Model
+** KadapaNet training
+Data Augmentation:
+- rescale=1./255,
+- rotation_range=10,
+- zoom_range=1,
+- width_shift_range=0.1,
+- height_shift_range=0.1,
+- channel_shift_range = 30,
+- horizontal_flip = True
+Optimization = Adam
+Learning rate annhealing:
+- intermediate model: 10^3 -> 10^5 factor 0.5
+- final mode: 10^5 -> 10^7 factor 0.5
+Batch Size = 32
+Early Stopping = True with patience 10 (holds for intermediate only)
+epochs: intermediate = 40, final = 10
+Accuracy: 0.855555
+Accuracy with TTA (all augmentations): 0.862222
