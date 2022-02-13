@@ -1,5 +1,6 @@
 # ANN2DL-2020
 Artificial neural networks and deep learning 2020 PoliMI course homework.
+
 Three tasks:
 - **Face mask classification**: given pictures of people with and without mask we had to classify images with regard to mask presence in the picture. For example, if 1 person out of an arbitrary number of people wears a mask the model would classify it to the positive class. If nobody wears a mask it would classify it to the negative class.
 
